@@ -1,0 +1,24 @@
+<div class="max-w-3xl mx-auto space-y-6">
+
+  @for (project of projects; track project.name) {
+    <div
+      class="bg-white rounded-2xl shadow-md shadow-pink-200/40 p-6 space-y-3 border border-rose-200">
+
+      <h2 class="text-2xl font-bold text-rose-600">
+        {{ project.name }}
+      </h2>
+
+      <p class="text-rose-400">
+        {{ project.description }}
+      </p>
+
+      <span
+        class="inline-block px-3 py-1 text-sm rounded-full bg-rose-100 text-rose-600 font-medium">
+        {{ project.status }}
+      </span>
+
+      <app-task-list [tasks]="project.tasks"></app-task-list>
+    </div>
+  }
+
+</div>
