@@ -1,17 +1,21 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PriorityColorPipe } from '../../../../shared/priority-color-pipe';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    PriorityColorPipe
+  ],
   templateUrl: './task-list.component.html'
 })
 export class TaskListComponent {
 
   @Input() tasks: any[] = [];
 
-  getColor(status: string): string {
+  getStatusClass(status: string) {
     switch (status) {
       case 'En attente':
         return 'border-rose-300 bg-rose-50';
