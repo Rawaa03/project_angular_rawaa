@@ -1,3 +1,11 @@
-<div class="min-h-screen bg-gradient-to-br from-rose-100 via-pink-100 to-rose-200 p-6">
+<div [ngClass]="darkMode ? 'dark-bg' : ''">
+
+  <button
+    class="m-4 px-4 py-2 rounded btn"
+    (click)="toggleTheme()">
+    🌙 Mode sombre rose
+  </button>
+
   <app-project-list></app-project-list>
+
 </div>

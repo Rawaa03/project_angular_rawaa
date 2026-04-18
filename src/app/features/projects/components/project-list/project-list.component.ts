@@ -1,46 +1,77 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { ProjectDetailComponent } from '../project-detail/project-detail';
+import { DashboardComponent } from '../dashboard/dashboard';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, ProjectDetailComponent],
+  imports: [CommonModule, FormsModule, ProjectDetailComponent, DashboardComponent],
   templateUrl: './project-list.component.html'
 })
 export class ProjectListComponent {
 
-  searchTerm: string = '';
+  message: string = '';
   selectedProject: any = null;
+
+  // 🔥 champs formulaire
+  newProjectName: string = '';
+  newProjectDesc: string = '';
 
   projects = [
     {
       name: 'Projet 1',
-      description: 'Description 1',
+      description: 'Application Angular',
       status: 'En cours',
       createdAt: new Date(),
       tasks: [
-      ]
-    },
-    {
-      name: 'Projet 2',
-      description: 'Description 2',
-      status: 'Terminé',
-      createdAt: new Date(),
-      tasks: [
-        { title: 'Tâche 1', priority: 'Basse', status: 'Terminé' }
+        { title: 'Design UI', priority: 'Haute', status: 'En attente' },
+        { title: 'Backend API', priority: 'Moyenne', status: 'En cours' }
       ]
     }
   ];
 
-  selectProject(project: any) {
-    this.selectedProject = project;
+  selectProject(p: any) {
+    this.selectedProject = p;
   }
 
-  get filteredProjects() {
-    return this.projects.filter(p =>
-      p.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+  showMessage(msg: string) {
+    this.message = msg;
+
+    setTimeout(() => {
+      this.message = '';
+    }, 3000);
+  }
+
+  // 🔥 AJOUT PROJET
+  addProject() {
+    if (!this.newProjectName) return;
+
+    const newProject = {
+      name: this.newProjectName,
+      description: this.newProjectDesc,
+      status: 'En attente',
+      createdAt: new Date(), // ✅ DATE AUTO
+      tasks: []
+    };
+
+    this.projects.push(newProject);
+
+    this.showMessage('Projet ajouté avec succès');
+
+    this.newProjectName = '';
+    this.newProjectDesc = '';
+  }
+
+  // 🔥 SUPPRESSION PROJET
+  deleteProject(project: any) {
+    this.projects = this.projects.filter(p => p !== project);
+
+    if (this.selectedProject === project) {
+      this.selectedProject = null;
+    }
+
+    this.showMessage('Projet supprimé');
   }
 }

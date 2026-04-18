@@ -1,0 +1,54 @@
+<div class="card mt-6">
+
+  <h2 class="text-xl font-bold text-pink-600 mb-4">
+    📊 Dashboard
+  </h2>
+
+  <!-- 🔢 Stats -->
+  <div class="grid grid-cols-3 gap-4 text-center">
+
+    <div class="bg-pink-50 p-3 rounded-xl">
+      <p class="text-pink-500 font-semibold">Projets</p>
+      <p class="text-lg font-bold">{{ totalProjects }}</p>
+    </div>
+
+    <div class="bg-pink-50 p-3 rounded-xl">
+      <p class="text-pink-500 font-semibold">Tâches</p>
+      <p class="text-lg font-bold">{{ totalTasks }}</p>
+    </div>
+
+    <div class="bg-pink-50 p-3 rounded-xl">
+      <p class="text-pink-500 font-semibold">Progression</p>
+      <p class="text-lg font-bold">{{ progress }}%</p>
+    </div>
+
+  </div>
+
+  <!-- 🔵 Progress ring (simple Tailwind version) -->
+  <div class="mt-6 flex justify-center">
+
+    <div class="relative w-28 h-28">
+
+      <!-- Background circle -->
+      <div class="w-28 h-28 rounded-full bg-pink-100"></div>
+
+      <!-- Foreground progress -->
+      <div
+        class="absolute top-0 left-0 w-28 h-28 rounded-full"
+        [style.background]="
+          'conic-gradient(#f472b6 ' + progress + '%, #fce7f3 ' + progress + '%)'
+        ">
+      </div>
+
+      <!-- Center text -->
+      <div class="absolute inset-0 flex items-center justify-center">
+        <span class="font-bold text-pink-600">
+          {{ progress }}%
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

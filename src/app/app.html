@@ -1,3 +1,11 @@
-<div class="p-4 bg-gray-100 min-h-screen">
+<div [ngClass]="darkMode ? 'dark-mode min-h-screen' : 'light-mode min-h-screen'">
+
+  <button
+    class="m-4 px-4 py-2 rounded bg-pink-500 text-white"
+    (click)="toggleTheme()">
+    🌙 Mode rose sombre
+  </button>
+
   <app-project-list></app-project-list>
+
 </div>
