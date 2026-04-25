@@ -1,0 +1,128 @@
+@if (message) {
+  <div class="toast">{{ message }}</div>
+}
+
+<form [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="card mt-6">
+
+  <h2 class="text-xl font-bold text-pink-600 mb-4">
+    🧾 Contact Form
+  </h2>
+
+  <!-- NOM -->
+  <div>
+    <input formControlName="nom"
+           placeholder="Nom"
+           class="w-full p-2 mb-2 rounded border border-pink-200 outline-none focus:border-pink-400">
+    <p class="text-red-500 text-sm mt-1">
+      {{ validationService.getErrorMessage(form.get('nom')) }}
+    </p>
+  </div>
+
+  <!-- PRENOM -->
+  <div>
+    <input formControlName="prenom"
+           placeholder="Prénom"
+           class="w-full p-2 mb-2 rounded border border-pink-200 outline-none focus:border-pink-400">
+    <p class="text-red-500 text-sm mt-1">
+      {{ validationService.getErrorMessage(form.get('prenom')) }}
+    </p>
+  </div>
+
+  <!-- EMAIL -->
+  <div>
+    <input formControlName="email"
+           placeholder="Email"
+           class="w-full p-2 mb-2 rounded border border-pink-200 outline-none focus:border-pink-400">
+    <p class="text-red-500 text-sm mt-1">
+      {{ validationService.getErrorMessage(form.get('email')) }}
+    </p>
+  </div>
+
+  <!-- AGE -->
+  <div>
+    <input formControlName="age"
+           type="number"
+           placeholder="Age"
+           class="w-full p-2 mb-2 rounded border border-pink-200 outline-none focus:border-pink-400">
+  </div>
+
+  <!-- VILLE -->
+  <div>
+    <input formControlName="ville"
+           placeholder="Ville"
+           class="w-full p-2 mb-2 rounded border border-pink-200 outline-none focus:border-pink-400">
+  </div>
+
+  <!-- ADRESSE (FORMGROUP) -->
+  <div formGroupName="adresse"
+       class="border border-pink-200 rounded p-3 bg-pink-50 space-y-2 mt-2">
+
+    <p class="font-semibold text-pink-500">Adresse</p>
+
+    <input formControlName="rue"
+           placeholder="Rue"
+           class="w-full p-2 rounded border border-pink-200 outline-none focus:border-pink-400">
+
+    <input formControlName="codePostal"
+           placeholder="Code postal"
+           class="w-full p-2 rounded border border-pink-200 outline-none focus:border-pink-400">
+
+    <input formControlName="ville"
+           placeholder="Ville"
+           class="w-full p-2 rounded border border-pink-200 outline-none focus:border-pink-400">
+
+    <input formControlName="pays"
+           placeholder="Pays"
+           class="w-full p-2 rounded border border-pink-200 outline-none focus:border-pink-400">
+  </div>
+
+  <!-- FORMARRAY -->
+  <div formArrayName="adresses" class="mt-4">
+
+    <p class="text-pink-500 font-semibold">Autres adresses</p>
+
+    <div *ngFor="let a of adresses.controls; let i = index"
+         [formGroupName]="i"
+         class="border border-pink-200 rounded p-3 bg-pink-50 space-y-2 mt-2">
+
+      <input formControlName="type"
+             placeholder="Type"
+             class="w-full p-2 rounded border border-pink-200 outline-none focus:border-pink-400">
+
+      <input formControlName="rue"
+             placeholder="Rue"
+             class="w-full p-2 rounded border border-pink-200 outline-none focus:border-pink-400">
+
+      <input formControlName="codePostal"
+             placeholder="CP"
+             class="w-full p-2 rounded border border-pink-200 outline-none focus:border-pink-400">
+
+      <input formControlName="ville"
+             placeholder="Ville"
+             class="w-full p-2 rounded border border-pink-200 outline-none focus:border-pink-400">
+
+      <button type="button"
+              (click)="removeAdresse(i)"
+              class="btn">
+        ❌ Supprimer
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ADD BUTTON -->
+  <button type="button"
+          (click)="addAdresse()"
+          class="btn mt-2">
+    ➕ Ajouter adresse
+  </button>
+
+  <!-- SUBMIT -->
+  <button type="submit"
+          class="btn mt-4 w-full">
+    Envoyer
+  </button>
+
+</form>

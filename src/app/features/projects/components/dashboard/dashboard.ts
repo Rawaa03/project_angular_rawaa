@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-dashboard',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './dashboard.html' // ✅ FIX HERE
+  templateUrl: './dashboard.html'
 })
 export class DashboardComponent implements OnChanges {
 
