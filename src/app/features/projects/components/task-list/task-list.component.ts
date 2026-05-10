@@ -1,24 +1,64 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PriorityColorPipe } from '../../../../shared/priority-color-pipe';
+import { ProjectService, ProjectTask } from '../../../../core/services/project.service';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, PriorityColorPipe],
+  imports: [CommonModule, FormsModule, RouterLink, PriorityColorPipe],
   templateUrl: './task-list.component.html'
 })
-export class TaskListComponent {
+export class TaskListComponent implements OnInit {
+  projectId = '';
+  tasks: ProjectTask[] = [];
+  sort: string = '';
+  status: string = '';
 
-  @Input() tasks: any[] = [];
-  @Output() statusChanged = new EventEmitter<void>();
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private projectService: ProjectService
+  ) {}
 
-  filterPriority: string = '';
+  ngOnInit(): void {
+    this.route.parent?.paramMap.subscribe(params => {
+      this.projectId = params.get('id') ?? '';
+      this.loadTasks();
+    });
+
+    this.route.queryParamMap.subscribe(params => {
+      this.sort = params.get('sort') ?? '';
+      this.status = params.get('status') ?? '';
+    });
+  }
 
   getFilteredTasks() {
-    if (!this.filterPriority) return this.tasks;
-    return this.tasks.filter(t => t.priority === this.filterPriority);
+    let result = [...this.tasks];
+
+    if (this.status) {
+      result = result.filter(task => task.status === this.status);
+    }
+
+    if (this.sort === 'priority') {
+      const order = { Haute: 1, Moyenne: 2, Basse: 3 };
+      result.sort((a, b) => order[a.priority] - order[b.priority]);
+    }
+
+    return result;
+  }
+
+  updateQueryParams() {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        sort: this.sort || null,
+        status: this.status || null
+      },
+      queryParamsHandling: 'merge'
+    });
   }
 
   getStatusClass(status: string) {
@@ -27,22 +67,19 @@ export class TaskListComponent {
         return 'border-rose-300 bg-rose-50';
       case 'En cours':
         return 'border-pink-300 bg-pink-50';
-      case 'Terminé':
+      case 'Termine':
         return 'border-fuchsia-300 bg-fuchsia-50';
       default:
         return 'border-rose-200 bg-rose-50';
     }
   }
 
-  changeStatus(task: any) {
-    if (task.status === 'En attente') {
-      task.status = 'En cours';
-    } else if (task.status === 'En cours') {
-      task.status = 'Terminé';
-    } else {
-      task.status = 'En attente';
-    }
+  changeStatus(task: ProjectTask) {
+    this.projectService.cycleTaskStatus(this.projectId, task.id);
+    this.loadTasks();
+  }
 
-    this.statusChanged.emit();
+  private loadTasks(): void {
+    this.tasks = this.projectService.getProjectById(this.projectId)?.tasks ?? [];
   }
 }

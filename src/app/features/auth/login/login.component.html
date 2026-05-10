@@ -1,0 +1,16 @@
+<form class="card max-w-md mx-auto" (ngSubmit)="login()">
+  <h1 class="text-2xl font-bold text-pink-600 mb-4">Login</h1>
+
+  <input [(ngModel)]="email"
+         name="email"
+         class="border p-2 rounded w-full mb-3"
+         placeholder="Email" />
+
+  <input [(ngModel)]="password"
+         name="password"
+         type="password"
+         class="border p-2 rounded w-full mb-3"
+         placeholder="Password" />
+
+  <button class="btn" type="submit">Se connecter</button>
+</form>

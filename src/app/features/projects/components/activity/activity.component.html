@@ -1,0 +1,11 @@
+<section class="mt-4">
+  <h3 class="text-lg font-semibold text-pink-600 mb-3">Activity</h3>
+
+  <ul class="space-y-2">
+    @for (activity of activities; track activity) {
+      <li class="border-l-4 border-pink-300 pl-3 text-gray-600">
+        {{ activity }}
+      </li>
+    }
+  </ul>
+</section>

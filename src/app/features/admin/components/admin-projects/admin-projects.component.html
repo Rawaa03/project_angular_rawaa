@@ -1,0 +1,11 @@
+<div class="card">
+  <h1 class="text-2xl font-bold text-pink-600 mb-4">Admin projects</h1>
+
+  <ul class="space-y-2">
+    @for (project of projectService.getProjects(); track project.id) {
+      <li class="border-b border-pink-100 pb-2">
+        {{ project.name }} - {{ project.status }}
+      </li>
+    }
+  </ul>
+</div>

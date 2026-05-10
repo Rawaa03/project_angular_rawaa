@@ -1,0 +1,15 @@
+<div class="card">
+  <h1 class="text-2xl font-bold text-pink-600 mb-4">Parametres</h1>
+
+  <label class="flex items-center gap-2 mb-4">
+    <input type="checkbox" [(ngModel)]="notifications" />
+    Notifications actives
+  </label>
+
+  <label class="block text-sm text-gray-500 mb-1" for="defaultView">Vue par defaut</label>
+  <select id="defaultView" [(ngModel)]="defaultView" class="border p-2 rounded w-full">
+    <option value="overview">Overview</option>
+    <option value="board">Board</option>
+    <option value="tasks">Tasks</option>
+  </select>
+</div>

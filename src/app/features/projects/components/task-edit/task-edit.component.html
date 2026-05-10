@@ -1,0 +1,14 @@
+<div class="card">
+  <h2 class="text-xl font-bold text-pink-600 mb-4">Edition tache</h2>
+
+  @if (task) {
+    <label class="block text-sm text-gray-500 mb-1" for="title">Titre</label>
+    <input id="title"
+           [(ngModel)]="title"
+           class="border p-2 rounded w-full mb-4" />
+
+    <button class="btn" (click)="save()">Enregistrer</button>
+  } @else {
+    <p>Tache introuvable</p>
+  }
+</div>

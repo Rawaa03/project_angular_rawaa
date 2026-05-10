@@ -14,12 +14,11 @@ import { CommonModule } from '@angular/common';
   `
 })
 export class StatusBadgeComponent {
-
   @Input() status!: string;
 
   getClass(status: string) {
     switch (status) {
-      case 'Terminé': return 'bg-green-500';
+      case 'Termine': return 'bg-green-500';
       case 'En cours': return 'bg-yellow-500';
       case 'En attente': return 'bg-red-500';
       default: return 'bg-gray-400';

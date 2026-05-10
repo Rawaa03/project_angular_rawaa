@@ -1,19 +1,43 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProjectListComponent } from './features/projects/components/project-list/project-list.component';
-import { ContactFormComponent } from './features/forms/contact-form/contact-form';
+import { NavigationEnd, NavigationError, NavigationStart, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, ProjectListComponent, ContactFormComponent],
+  imports: [CommonModule, RouterLink, RouterOutlet],
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-
   darkMode: boolean = false;
+  loading: boolean = false;
+
+  constructor(
+    private router: Router,
+    public authService: AuthService
+  ) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.loading = true;
+      }
+
+      if (event instanceof NavigationEnd || event instanceof NavigationError) {
+        this.loading = false;
+      }
+    });
+  }
 
   toggleTheme() {
     this.darkMode = !this.darkMode;
+  }
+
+  loginAsAdmin() {
+    this.authService.login('admin@test.com', 'admin');
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/projects']);
   }
 }

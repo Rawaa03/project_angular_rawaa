@@ -1,18 +1,32 @@
-<div [ngClass]="darkMode ? 'dark-bg' : ''">
+<div [ngClass]="darkMode ? 'dark-bg min-h-screen' : 'light-mode min-h-screen'">
 
-  <button
-    class="m-4 px-4 py-2 rounded btn"
-    (click)="toggleTheme()">
-    🌙 Mode sombre rose
-  </button>
+  <header class="bg-white/90 border-b border-pink-100 sticky top-0 z-10">
+    <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
+      <a routerLink="/projects" class="font-bold text-pink-600">Project Manager</a>
+      <a routerLink="/projects" class="btn">Projets</a>
+      <a routerLink="/settings" class="btn">Settings</a>
+      <a routerLink="/admin" class="btn">Admin</a>
 
-  <!-- ✅ TP5 FORMULAIRE -->
-  <app-contact-form></app-contact-form>
+      <span class="flex-1"></span>
 
-  <!-- espace -->
-  <div class="my-6"></div>
+      <button class="btn" (click)="toggleTheme()">Mode sombre rose</button>
 
-  <!-- ✅ TP4 projets -->
-  <app-project-list></app-project-list>
+      @if (authService.isLoggedIn()) {
+        <button class="btn bg-rose-500" (click)="logout()">Logout</button>
+      } @else {
+        <button class="btn" (click)="loginAsAdmin()">Login admin</button>
+      }
+    </nav>
+  </header>
+
+  @if (loading) {
+    <div class="fixed top-16 left-0 right-0 h-1 bg-pink-100 z-20">
+      <div class="h-full w-1/2 bg-pink-500 animate-pulse"></div>
+    </div>
+  }
+
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    <router-outlet></router-outlet>
+  </main>
 
 </div>

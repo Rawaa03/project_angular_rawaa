@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
   templateUrl: './dashboard.html'
 })
 export class DashboardComponent implements OnChanges {
-
   @Input() projects: any[] = [];
 
   totalProjects = 0;
@@ -23,11 +22,11 @@ export class DashboardComponent implements OnChanges {
     this.totalProjects = this.projects.length;
 
     this.totalTasks = this.projects.reduce(
-      (sum, p) => sum + p.tasks.length, 0
+      (sum, project) => sum + project.tasks.length, 0
     );
 
     const done = this.projects.reduce(
-      (sum, p) => sum + p.tasks.filter((t: any) => t.status === 'Terminé').length, 0
+      (sum, project) => sum + project.tasks.filter((task: any) => task.status === 'Termine').length, 0
     );
 
     this.progress = this.totalTasks === 0

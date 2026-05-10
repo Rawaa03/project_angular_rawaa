@@ -1,0 +1,21 @@
+@if (task) {
+  <div class="card">
+    <button class="btn mb-4" (click)="goBackToBoard()">Revenir au board</button>
+
+    <h2 class="text-xl font-bold text-pink-600">{{ task.title }}</h2>
+    <p class="text-gray-600 mt-2">{{ task.description }}</p>
+    <p class="text-sm text-gray-500 mt-2">{{ task.priority }} - {{ task.status }}</p>
+
+    <div class="mt-4 flex flex-wrap gap-2">
+      <button class="btn" (click)="goToComments()">Aller aux commentaires</button>
+      <a class="btn" [routerLink]="['/projects', projectId, 'tasks', taskId, 'edit']">Editer</a>
+    </div>
+
+    <section id="comments" class="mt-8">
+      <h3 class="text-lg font-semibold text-pink-600 mb-3">Commentaires</h3>
+      <app-comment-form></app-comment-form>
+    </section>
+  </div>
+} @else {
+  <div class="card">Tache introuvable</div>
+}

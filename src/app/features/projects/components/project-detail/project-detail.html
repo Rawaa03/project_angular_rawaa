@@ -1,31 +1,37 @@
-<div class="card mt-6">
+@if (resolving) {
+  <div class="card">Chargement du projet...</div>
+} @else if (project) {
+  <div class="card mt-6">
 
-  <h2 class="text-xl font-bold text-pink-600">
-    💖 {{ project.name }}
-  </h2>
+    <h2 class="text-xl font-bold text-pink-600">
+      {{ project.name }}
+    </h2>
 
-  <p class="text-sm text-gray-400">
-    Créé : {{ project.createdAt | friendlyDate }}
-  </p>
+    <p class="text-sm text-gray-400">
+      Cree : {{ project.createdAt | friendlyDate }}
+    </p>
 
-  <app-status-badge [status]="project.status"></app-status-badge>
+    <app-status-badge [status]="project.status"></app-status-badge>
 
-  <app-task-list
-    [tasks]="project.tasks"
-    (statusChanged)="onStatusChanged()">
-  </app-task-list>
+    <nav class="mt-4 flex flex-wrap gap-2">
+      <a class="btn" routerLink="overview" routerLinkActive="bg-pink-700">Overview</a>
+      <a class="btn" routerLink="board" routerLinkActive="bg-pink-700">Board</a>
+      <a class="btn" routerLink="tasks" routerLinkActive="bg-pink-700">Tasks</a>
+      <a class="btn" routerLink="activity" routerLinkActive="bg-pink-700">Activity</a>
+    </nav>
 
-  <!-- Progress -->
-  <div class="mt-4">
-    <div class="w-full bg-pink-100 rounded-full h-4">
-      <div class="h-4 rounded-full bg-pink-400"
-           [style.width.%]="progress">
+    <div class="mt-4">
+      <div class="w-full bg-pink-100 rounded-full h-4">
+        <div class="h-4 rounded-full bg-pink-400"
+             [style.width.%]="progress">
+        </div>
       </div>
+
+      <p class="text-sm text-pink-500 mt-1">
+        Progression : {{ progress }}%
+      </p>
     </div>
 
-    <p class="text-sm text-pink-500 mt-1">
-      Progression : {{ progress }}%
-    </p>
+    <router-outlet></router-outlet>
   </div>
-
-</div>
+}
